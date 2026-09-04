@@ -1,16 +1,17 @@
 import { Canvas } from '@react-three/fiber'
 import * as THREE from 'three'
-import type { ArtifactState } from '../../animation/states/artifactStates'
+import type { ArtifactState, SkillStateKey } from '../../animation/states/artifactStates'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { DigitalArtifact } from '../artifact/DigitalArtifact'
 import { SceneLighting } from '../lighting/SceneLighting'
 
 type PortfolioCanvasProps = {
+  activeSkill: SkillStateKey | null
   artifactState: ArtifactState
   onReady: () => void
 }
 
-export function PortfolioCanvas({ artifactState, onReady }: PortfolioCanvasProps) {
+export function PortfolioCanvas({ activeSkill, artifactState, onReady }: PortfolioCanvasProps) {
   const reducedMotion = useReducedMotion()
 
   return (
@@ -45,7 +46,7 @@ export function PortfolioCanvas({ artifactState, onReady }: PortfolioCanvasProps
         }}
       >
         <SceneLighting />
-        <DigitalArtifact reducedMotion={reducedMotion} state={artifactState} />
+        <DigitalArtifact activeSkill={activeSkill} reducedMotion={reducedMotion} state={artifactState} />
       </Canvas>
     </div>
   )

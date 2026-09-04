@@ -1,8 +1,9 @@
 import { lazy, Suspense, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { createAboutArtifactTrigger } from '../animation/scroll/createAboutArtifactTrigger'
 import { createHeroWorkTimeline } from '../animation/scroll/createHeroWorkTimeline'
+import { createSkillsArtifactTrigger } from '../animation/scroll/createSkillsArtifactTrigger'
 import { useLenisScroll } from '../animation/scroll/useLenisScroll'
-import type { ArtifactState } from '../animation/states/artifactStates'
+import type { ArtifactState, SkillStateKey } from '../animation/states/artifactStates'
 import { useMediaQuery } from '../hooks/useMediaQuery'
 import { profile } from '../data/profile'
 import { useReducedMotion } from '../hooks/useReducedMotion'
@@ -10,6 +11,7 @@ import { Hero } from '../sections/Hero/Hero'
 import { SystemBoot } from '../sections/Boot/SystemBoot'
 import { AboutManifesto } from '../sections/About/AboutManifesto'
 import { AiTasterCaseStudy } from '../sections/CaseStudy/AiTasterCaseStudy'
+import { SkillsSystem } from '../sections/Skills/SkillsSystem'
 import { WorkPreview } from '../sections/Work/WorkPreview'
 
 const PortfolioCanvas = lazy(() =>
@@ -19,19 +21,26 @@ const PortfolioCanvas = lazy(() =>
 const navigationItems = [
   { href: '#work', label: 'Work' },
   { href: '#about', label: 'About' },
+  { href: '#skills', label: 'Skills' },
 ]
 
 function App() {
   const [canvasReady, setCanvasReady] = useState(false)
   const [bootComplete, setBootComplete] = useState(false)
   const [artifactState, setArtifactState] = useState<ArtifactState>('HERO_IDLE')
+  const [activeSkill, setActiveSkill] = useState<SkillStateKey | null>(null)
   const heroRef = useRef<HTMLElement>(null)
   const workRef = useRef<HTMLElement>(null)
   const aboutRef = useRef<HTMLElement>(null)
+  const skillsRef = useRef<HTMLElement>(null)
   const usesSemanticCanvasFallback = useMediaQuery('(max-width: 640px)')
   const reducedMotion = useReducedMotion()
   const completeBoot = useCallback(() => setBootComplete(true), [])
   const setCanvasReadyOnce = useCallback(() => setCanvasReady(true), [])
+  const handleActiveSkillChange = useCallback((skill: SkillStateKey | null) => {
+    setActiveSkill(skill)
+    if (skill && !reducedMotion) setArtifactState('SKILL_REACTIVE')
+  }, [reducedMotion])
 
   useLenisScroll(reducedMotion)
 
@@ -45,6 +54,17 @@ function App() {
       reducedMotion,
     })
   }, [reducedMotion])
+
+  useLayoutEffect(() => {
+    if (!skillsRef.current) return undefined
+
+    return createSkillsArtifactTrigger({
+      onActiveSkillChange: () => handleActiveSkillChange(null),
+      onArtifactStateChange: setArtifactState,
+      reducedMotion,
+      skills: skillsRef.current,
+    })
+  }, [handleActiveSkillChange, reducedMotion])
 
   useLayoutEffect(() => {
     if (!aboutRef.current) return undefined
@@ -83,7 +103,7 @@ function App() {
       </header>
 
       <Suspense fallback={null}>
-        <PortfolioCanvas artifactState={artifactState} onReady={setCanvasReadyOnce} />
+        <PortfolioCanvas activeSkill={activeSkill} artifactState={artifactState} onReady={setCanvasReadyOnce} />
       </Suspense>
 
       <main id="main-content" className="portfolio-main" tabIndex={-1}>
@@ -91,6 +111,11 @@ function App() {
         <WorkPreview sectionRef={workRef} />
         <AiTasterCaseStudy />
         <AboutManifesto sectionRef={aboutRef} />
+        <SkillsSystem
+          activeSkill={activeSkill}
+          onActiveSkillChange={handleActiveSkillChange}
+          sectionRef={skillsRef}
+        />
       </main>
 
       {!bootComplete && (

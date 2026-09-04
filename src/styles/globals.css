@@ -743,6 +743,126 @@ a:focus-visible {
   content: '—';
 }
 
+.skills-system {
+  min-height: 100svh;
+  align-content: center;
+  row-gap: var(--space-4xl);
+  padding-block: var(--space-5xl);
+}
+
+.skills-system__masthead {
+  display: grid;
+  grid-column: 1 / span 8;
+  gap: var(--space-lg);
+}
+
+.skills-system__eyebrow,
+.skills-system__group h3,
+.skills-system__scope-note,
+.skills-system__skill small {
+  margin: 0;
+  font-family: var(--font-technical);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.skills-system__eyebrow,
+.skills-system__group h3 {
+  color: var(--color-accent);
+}
+
+.skills-system__masthead h2 {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 9rem);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.skills-system__scope-note {
+  grid-column: 9 / -1;
+  align-self: end;
+  max-width: 21rem;
+  color: var(--color-text-muted);
+}
+
+.skills-system__groups {
+  display: grid;
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--color-border);
+}
+
+.skills-system__group {
+  display: grid;
+  grid-template-columns: minmax(11rem, 3fr) minmax(0, 9fr);
+  gap: var(--space-xl);
+  padding-block: var(--space-xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skills-system__group h3 {
+  padding-top: var(--space-sm);
+}
+
+.skills-system__group ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skills-system__skill {
+  display: grid;
+  width: 100%;
+  min-height: 3rem;
+  gap: var(--space-xs);
+  padding: var(--space-sm) 0 var(--space-sm) var(--space-md);
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  border-left: 1px solid transparent;
+  color: var(--color-text-muted);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  text-align: left;
+  text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.skills-system__skill:hover,
+.skills-system__skill:focus-visible,
+.skills-system__skill[aria-pressed='true'] {
+  border-left-color: var(--color-accent);
+  color: var(--color-text);
+  outline: none;
+}
+
+.skills-system__skill:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.skills-system__skill small {
+  color: var(--color-text-muted);
+}
+
+.skills-system__skill[aria-pressed='true'] small {
+  color: var(--color-accent);
+}
+
 .skip-link {
   position: fixed;
   z-index: 10;
@@ -891,6 +1011,22 @@ a:focus-visible {
   .about__group {
     grid-template-columns: 1fr;
     gap: var(--space-md);
+  }
+
+  .skills-system__masthead {
+    grid-column: 1 / span 6;
+  }
+
+  .skills-system__scope-note {
+    grid-column: 6 / -1;
+  }
+
+  .skills-system__group {
+    grid-template-columns: minmax(8rem, 2fr) minmax(0, 6fr);
+  }
+
+  .skills-system__group ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1092,6 +1228,47 @@ a:focus-visible {
   .about__group {
     grid-template-columns: 1fr;
     gap: var(--space-md);
+  }
+
+  .skills-system {
+    min-height: auto;
+    row-gap: var(--space-3xl);
+    padding-block: var(--space-4xl);
+  }
+
+  .skills-system__masthead,
+  .skills-system__scope-note,
+  .skills-system__groups {
+    grid-column: 1 / -1;
+  }
+
+  .skills-system__masthead {
+    gap: var(--space-md);
+  }
+
+  .skills-system__masthead h2 {
+    max-width: 10ch;
+    font-size: clamp(3.25rem, 14vw, 4.75rem);
+  }
+
+  .skills-system__scope-note {
+    max-width: 26rem;
+  }
+
+  .skills-system__group {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding-block: var(--space-lg);
+  }
+
+  .skills-system__group ul {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .skills-system__skill {
+    min-height: 3.25rem;
+    font-size: clamp(1.5rem, 8vw, 2.25rem);
   }
 
   .work-project__button {
