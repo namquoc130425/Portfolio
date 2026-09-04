@@ -13,7 +13,7 @@ export type SkillCategory = {
   skills: readonly Skill[]
 }
 
-export const skillCategories = [
+export const skillCategories: readonly SkillCategory[] = [
   {
     id: 'backend-engineering',
     label: 'Backend / Engineering',
@@ -50,4 +50,4 @@ export const skillCategories = [
       { id: 'tailwind-css', label: 'Tailwind CSS', stateKey: 'TAILWIND_CSS', note: 'Tailwind CSS 4 — currently using / learning' },
     ],
   },
-] as const satisfies readonly SkillCategory[]
+]

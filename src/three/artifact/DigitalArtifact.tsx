@@ -61,6 +61,15 @@ const artifactTargets = {
     metalRotationSpeed: -0.032,
     corePulse: [0.95, 0.018] as const,
   },
+  CONTACT: {
+    position: new THREE.Vector3(2.7, -0.35, -0.5),
+    scale: 0.56,
+    layerOffset: 0.04,
+    rotation: [0.1, -0.82] as const,
+    glassRotationSpeed: 0.008,
+    metalRotationSpeed: -0.012,
+    corePulse: [0.52, 0.007] as const,
+  },
 } as const
 
 type SkillProfile = {
@@ -77,7 +86,7 @@ const defaultSkillProfile: SkillProfile = {
   coreScale: 1,
 }
 
-const skillProfiles = {
+const skillProfiles: Partial<Record<SkillStateKey, SkillProfile>> = {
   JAVA: { glassScale: 0.98, metalScale: 1.1, topologyScale: 1.04, coreScale: 1 },
   SPRING_BOOT: { glassScale: 1.06, metalScale: 1.02, topologyScale: 1.02, coreScale: 1.03 },
   MICROSERVICES: { glassScale: 0.94, metalScale: 0.98, topologyScale: 1.24, coreScale: 0.94 },
@@ -85,7 +94,7 @@ const skillProfiles = {
   REDIS: { glassScale: 1, metalScale: 1.02, topologyScale: 1.05, coreScale: 1.12 },
   REACT: { glassScale: 1.02, metalScale: 0.96, topologyScale: 0.94, coreScale: 0.98 },
   TYPESCRIPT: { glassScale: 0.98, metalScale: 1.04, topologyScale: 1.1, coreScale: 1 },
-} as const satisfies Partial<Record<SkillStateKey, SkillProfile>>
+}
 
 export function DigitalArtifact({ activeSkill, reducedMotion, state: artifactState }: DigitalArtifactProps) {
   const artifact = useRef<THREE.Group>(null)
@@ -121,7 +130,7 @@ export function DigitalArtifact({ activeSkill, reducedMotion, state: artifactSta
       )
       if (!reducedMotion) {
         const rotation = elapsed * target.glassRotationSpeed
-        glassLayer.current.rotation.y = artifactState === 'ABOUT'
+        glassLayer.current.rotation.y = artifactState === 'ABOUT' || artifactState === 'CONTACT'
           ? THREE.MathUtils.lerp(glassLayer.current.rotation.y, rotation, damping)
           : rotation
       }
@@ -135,7 +144,7 @@ export function DigitalArtifact({ activeSkill, reducedMotion, state: artifactSta
       )
       if (!reducedMotion) {
         const rotation = elapsed * target.metalRotationSpeed
-        metalLayer.current.rotation.z = artifactState === 'ABOUT'
+        metalLayer.current.rotation.z = artifactState === 'ABOUT' || artifactState === 'CONTACT'
           ? THREE.MathUtils.lerp(metalLayer.current.rotation.z, rotation, damping)
           : rotation
       }

@@ -1,4 +1,4 @@
-export const artifactStates = ['HERO_IDLE', 'DECOMPOSITION', 'WORK_INDEX', 'ABOUT', 'SKILL_REACTIVE'] as const
+export const artifactStates = ['HERO_IDLE', 'DECOMPOSITION', 'WORK_INDEX', 'ABOUT', 'SKILL_REACTIVE', 'CONTACT'] as const
 
 export type ArtifactState = (typeof artifactStates)[number]
 

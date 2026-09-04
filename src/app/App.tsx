@@ -1,5 +1,6 @@
 import { lazy, Suspense, useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { createAboutArtifactTrigger } from '../animation/scroll/createAboutArtifactTrigger'
+import { createContactArtifactTrigger } from '../animation/scroll/createContactArtifactTrigger'
 import { createHeroWorkTimeline } from '../animation/scroll/createHeroWorkTimeline'
 import { createSkillsArtifactTrigger } from '../animation/scroll/createSkillsArtifactTrigger'
 import { useLenisScroll } from '../animation/scroll/useLenisScroll'
@@ -11,6 +12,7 @@ import { Hero } from '../sections/Hero/Hero'
 import { SystemBoot } from '../sections/Boot/SystemBoot'
 import { AboutManifesto } from '../sections/About/AboutManifesto'
 import { AiTasterCaseStudy } from '../sections/CaseStudy/AiTasterCaseStudy'
+import { ContactFinalCta } from '../sections/Contact/ContactFinalCta'
 import { SkillsSystem } from '../sections/Skills/SkillsSystem'
 import { WorkPreview } from '../sections/Work/WorkPreview'
 
@@ -22,6 +24,7 @@ const navigationItems = [
   { href: '#work', label: 'Work' },
   { href: '#about', label: 'About' },
   { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' },
 ]
 
 function App() {
@@ -33,6 +36,7 @@ function App() {
   const workRef = useRef<HTMLElement>(null)
   const aboutRef = useRef<HTMLElement>(null)
   const skillsRef = useRef<HTMLElement>(null)
+  const contactRef = useRef<HTMLElement>(null)
   const usesSemanticCanvasFallback = useMediaQuery('(max-width: 640px)')
   const reducedMotion = useReducedMotion()
   const completeBoot = useCallback(() => setBootComplete(true), [])
@@ -76,6 +80,17 @@ function App() {
     })
   }, [reducedMotion])
 
+  useLayoutEffect(() => {
+    if (!contactRef.current) return undefined
+
+    return createContactArtifactTrigger({
+      contact: contactRef.current,
+      onActiveSkillChange: () => handleActiveSkillChange(null),
+      onArtifactStateChange: setArtifactState,
+      reducedMotion,
+    })
+  }, [handleActiveSkillChange, reducedMotion])
+
   return (
     <div className="site-shell">
       <a className="skip-link" href="#main-content">
@@ -116,6 +131,7 @@ function App() {
           onActiveSkillChange={handleActiveSkillChange}
           sectionRef={skillsRef}
         />
+        <ContactFinalCta sectionRef={contactRef} />
       </main>
 
       {!bootComplete && (

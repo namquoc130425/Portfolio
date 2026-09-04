@@ -33,15 +33,22 @@ const particleStates = {
   WORK_INDEX: { opacity: 0.48, scale: 2.12 },
   ABOUT: { opacity: 0.1, scale: 0.82 },
   SKILL_REACTIVE: { opacity: 0.18, scale: 0.92 },
+  CONTACT: { opacity: 0.06, scale: 0.72 },
 } as const
 
-const skillParticleProfiles = {
+type SkillParticleProfile = {
+  opacity: number
+  rotationSpeed: number
+  scale: number
+}
+
+const skillParticleProfiles: Partial<Record<SkillStateKey, SkillParticleProfile>> = {
   KAFKA: { opacity: 0.36, rotationSpeed: 0.09, scale: 1.42 },
   REDIS: { opacity: 0.3, rotationSpeed: 0.065, scale: 1.08 },
   MICROSERVICES: { opacity: 0.22, rotationSpeed: 0.025, scale: 1.18 },
   REACT: { opacity: 0.15, rotationSpeed: 0.018, scale: 0.86 },
   TYPESCRIPT: { opacity: 0.2, rotationSpeed: 0.022, scale: 0.96 },
-} as const satisfies Partial<Record<SkillStateKey, { opacity: number; rotationSpeed: number; scale: number }>>
+}
 
 export function SignalParticles({ activeSkill, reducedMotion, state }: SignalParticlesProps) {
   const particles = useRef<THREE.Points>(null)
@@ -55,7 +62,7 @@ export function SignalParticles({ activeSkill, reducedMotion, state }: SignalPar
       : undefined
     const targetOpacity = skillProfile?.opacity ?? target.opacity
     const targetScale = skillProfile?.scale ?? target.scale
-    const rotationSpeed = skillProfile?.rotationSpeed ?? (state === 'ABOUT' ? 0.012 : 0.035)
+    const rotationSpeed = skillProfile?.rotationSpeed ?? (state === 'CONTACT' ? 0.008 : state === 'ABOUT' ? 0.012 : 0.035)
     const damping = 1 - Math.exp(-delta * 3.5)
 
     if (particles.current) {
