@@ -30,6 +30,7 @@ const particleStates = {
   HERO_IDLE: { opacity: 0.22, scale: 1 },
   DECOMPOSITION: { opacity: 0.78, scale: 1.72 },
   WORK_INDEX: { opacity: 0.48, scale: 2.12 },
+  ABOUT: { opacity: 0.1, scale: 0.82 },
 } as const
 
 export function SignalParticles({ reducedMotion, state }: SignalParticlesProps) {
@@ -43,7 +44,7 @@ export function SignalParticles({ reducedMotion, state }: SignalParticlesProps) 
 
     if (particles.current) {
       particles.current.scale.setScalar(THREE.MathUtils.lerp(particles.current.scale.x, target.scale, damping))
-      if (!reducedMotion) particles.current.rotation.y += delta * 0.035
+      if (!reducedMotion) particles.current.rotation.y += delta * (state === 'ABOUT' ? 0.012 : 0.035)
     }
     if (material.current) {
       material.current.opacity = THREE.MathUtils.lerp(material.current.opacity, target.opacity, damping)

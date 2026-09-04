@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { createAboutArtifactTrigger } from '../animation/scroll/createAboutArtifactTrigger'
 import { createHeroWorkTimeline } from '../animation/scroll/createHeroWorkTimeline'
 import { useLenisScroll } from '../animation/scroll/useLenisScroll'
 import type { ArtifactState } from '../animation/states/artifactStates'
@@ -7,6 +8,7 @@ import { profile } from '../data/profile'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import { Hero } from '../sections/Hero/Hero'
 import { SystemBoot } from '../sections/Boot/SystemBoot'
+import { AboutManifesto } from '../sections/About/AboutManifesto'
 import { AiTasterCaseStudy } from '../sections/CaseStudy/AiTasterCaseStudy'
 import { WorkPreview } from '../sections/Work/WorkPreview'
 
@@ -16,7 +18,7 @@ const PortfolioCanvas = lazy(() =>
 
 const navigationItems = [
   { href: '#work', label: 'Work' },
-  { label: 'About' },
+  { href: '#about', label: 'About' },
 ]
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
   const [artifactState, setArtifactState] = useState<ArtifactState>('HERO_IDLE')
   const heroRef = useRef<HTMLElement>(null)
   const workRef = useRef<HTMLElement>(null)
+  const aboutRef = useRef<HTMLElement>(null)
   const usesSemanticCanvasFallback = useMediaQuery('(max-width: 640px)')
   const reducedMotion = useReducedMotion()
   const completeBoot = useCallback(() => setBootComplete(true), [])
@@ -38,6 +41,16 @@ function App() {
     return createHeroWorkTimeline({
       hero: heroRef.current,
       work: workRef.current,
+      onArtifactStateChange: setArtifactState,
+      reducedMotion,
+    })
+  }, [reducedMotion])
+
+  useLayoutEffect(() => {
+    if (!aboutRef.current) return undefined
+
+    return createAboutArtifactTrigger({
+      about: aboutRef.current,
       onArtifactStateChange: setArtifactState,
       reducedMotion,
     })
@@ -77,6 +90,7 @@ function App() {
         <Hero sectionRef={heroRef} />
         <WorkPreview sectionRef={workRef} />
         <AiTasterCaseStudy />
+        <AboutManifesto sectionRef={aboutRef} />
       </main>
 
       {!bootComplete && (
