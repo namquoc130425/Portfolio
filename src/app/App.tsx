@@ -6,6 +6,7 @@ import { createSkillsArtifactTrigger } from '../animation/scroll/createSkillsArt
 import { useLenisScroll } from '../animation/scroll/useLenisScroll'
 import type { ArtifactState, SkillStateKey } from '../animation/states/artifactStates'
 import { useMediaQuery } from '../hooks/useMediaQuery'
+import { useActiveSection } from '../hooks/useActiveSection'
 import { profile } from '../data/profile'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import { Hero } from '../sections/Hero/Hero'
@@ -27,6 +28,14 @@ const navigationItems = [
   { href: '#contact', label: 'Contact' },
 ]
 
+const navigationSections = [
+  { href: '#work', id: 'work' },
+  { href: '#work', id: 'ai-taster-case-study' },
+  { href: '#about', id: 'about' },
+  { href: '#skills', id: 'skills' },
+  { href: '#contact', id: 'contact' },
+] as const
+
 function App() {
   const [canvasReady, setCanvasReady] = useState(false)
   const [bootComplete, setBootComplete] = useState(false)
@@ -39,6 +48,7 @@ function App() {
   const contactRef = useRef<HTMLElement>(null)
   const usesSemanticCanvasFallback = useMediaQuery('(max-width: 640px)')
   const reducedMotion = useReducedMotion()
+  const [activeNavigationHref, setActiveNavigationHref] = useActiveSection(navigationSections)
   const completeBoot = useCallback(() => setBootComplete(true), [])
   const setCanvasReadyOnce = useCallback(() => setCanvasReady(true), [])
   const handleActiveSkillChange = useCallback((skill: SkillStateKey | null) => {
@@ -105,7 +115,12 @@ function App() {
         <nav className="site-navigation" aria-label="Primary navigation">
           {navigationItems.map((item) => (
             item.href ? (
-              <a key={item.href} href={item.href}>
+              <a
+                key={item.href}
+                href={item.href}
+                aria-current={activeNavigationHref === item.href ? 'location' : undefined}
+                onClick={() => setActiveNavigationHref(item.href)}
+              >
                 {item.label}
               </a>
             ) : (

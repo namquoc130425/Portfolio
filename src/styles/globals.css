@@ -129,6 +129,21 @@ a:focus-visible {
   color: var(--color-text);
 }
 
+.site-navigation a[aria-current='location'] {
+  color: var(--color-text);
+}
+
+.site-navigation a[aria-current='location']::before {
+  display: inline-block;
+  width: 0.25rem;
+  height: 0.25rem;
+  margin-right: var(--space-sm);
+  border-radius: 50%;
+  background: var(--color-accent);
+  content: '';
+  vertical-align: middle;
+}
+
 .portfolio-main {
   position: relative;
   z-index: 1;
@@ -1178,12 +1193,20 @@ a:focus-visible {
     right: 1.25rem;
     width: max-content;
     grid-column: 3 / -1;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
   }
 
   .site-navigation a,
   .site-navigation span {
     font-size: 0.625rem;
+  }
+
+  .site-navigation a[aria-current='location']::before {
+    position: absolute;
+    top: calc(100% + var(--space-xs));
+    left: 50%;
+    margin: 0;
+    transform: translateX(-50%);
   }
 
   .portfolio-main {
