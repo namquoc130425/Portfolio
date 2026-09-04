@@ -15,7 +15,7 @@ const PortfolioCanvas = lazy(() =>
 
 const navigationItems = [
   { href: '#work', label: 'Work' },
-  { href: '#about', label: 'About' },
+  { label: 'About' },
 ]
 
 function App() {
@@ -55,9 +55,15 @@ function App() {
 
         <nav className="site-navigation" aria-label="Primary navigation">
           {navigationItems.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
+            item.href ? (
+              <a key={item.href} href={item.href}>
+                {item.label}
+              </a>
+            ) : (
+              <span key={item.label} aria-label="About — planned after Prototype V1">
+                {item.label}
+              </span>
+            )
           ))}
         </nav>
       </header>
