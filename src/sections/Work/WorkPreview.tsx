@@ -26,6 +26,9 @@ export function WorkPreview({ sectionRef }: WorkPreviewProps) {
           onActivate={() => setActiveProject(project.id)}
           onDeactivate={() => setActiveProject(null)}
         />
+        <a className="work__case-link" href="#ai-taster-case-study">
+          Read engineering case study <span aria-hidden="true">↓</span>
+        </a>
       </div>
     </section>
   )

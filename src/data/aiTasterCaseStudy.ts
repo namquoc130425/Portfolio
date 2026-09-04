@@ -1,0 +1,117 @@
+export const aiTasterCaseStudy = {
+  project: {
+    index: '01',
+    label: 'AI Taster',
+    title: 'AI Expert Marketplace',
+    year: '2026',
+    role: 'Backend-heavy full-stack contributor',
+  },
+  overview:
+    'AI Taster is a platform that connects businesses or individuals with qualified AI experts and manages the workflow from job posting to project completion.',
+  problem:
+    'The product brings job creation, AI assistance, expert proposals, project coordination and a payment-protection workflow into one marketplace journey.',
+  workflow: [
+    'Account',
+    'Join platform',
+    'Job post',
+    'AI assistance',
+    'Validation / moderation',
+    'Published job',
+    'Expert discovery',
+    'Proposal / application',
+    'Price + terms',
+    'Invitation / selection',
+    'Expert accept',
+    'Payment',
+    'Held funds',
+    'Project + milestones',
+    'Messaging / delivery',
+    'Dispute review if needed',
+    'Project complete',
+    'Funds release',
+  ],
+  architecture: [
+    {
+      label: 'Application foundation',
+      detail: 'Java 21, Spring Boot, Spring Web',
+    },
+    {
+      label: 'Data layer',
+      detail: 'Spring Data JPA and MySQL',
+    },
+    {
+      label: 'Security',
+      detail: 'Spring Security and OAuth2 Resource Server dependencies',
+    },
+    {
+      label: 'AI integration',
+      detail: 'Spring AI, Google GenAI integration and Google GenAI embeddings',
+    },
+    {
+      label: 'Realtime + support',
+      detail: 'WebSocket, Redis, Spring Mail, Thymeleaf, MapStruct, Lombok and OpenAPI',
+    },
+  ],
+  architectureTodo:
+    '[TODO] Document the verified runtime topology and an architecture diagram from the AI Taster repository before publishing a detailed system diagram.',
+  aiFacts: [
+    'AI is integrated into Job Post to help improve or enrich the post.',
+    'RAG is used in the AI-assisted job-post flow.',
+    'Vector-database logic is used.',
+    'Skill relevance or matching logic is involved.',
+    'Regex-based moderation or filtering is involved.',
+  ],
+  aiTodos: [
+    'Vector database product/name',
+    'Retrieval inputs and retrieved document/data type',
+    'Embedding model used in this flow',
+    'Prompt strategy',
+    'Moderation rule examples',
+  ],
+  documentedContributions: [
+    'AI-assisted job posting',
+    'Proposals and invitations',
+    'Project and milestone workflows',
+    'Payment workflow',
+    'Messenger and WebSocket communication',
+    'JWT-based authentication',
+  ],
+  contributionTodo:
+    '[TODO] Verify the documented feature list against the AI Taster repository before presenting it as a production contribution claim.',
+  technologies: [
+    'Java 21',
+    'Spring Boot',
+    'Spring Web',
+    'Spring Data JPA',
+    'MySQL',
+    'Redis',
+    'Spring Security',
+    'OAuth2 Resource Server',
+    'Spring AI',
+    'Google GenAI integration',
+    'Google GenAI embeddings',
+    'WebSocket',
+    'Spring Mail',
+    'Thymeleaf',
+    'MapStruct',
+    'Lombok',
+    'OpenAPI',
+  ],
+  paymentLifecycle: [
+    'Business pays',
+    'System holds funds',
+    'Expert works / delivers',
+    'Project accepted or dispute resolved',
+    'Funds released to expert',
+  ],
+  paymentTodo: [
+    'Payment provider',
+    'Payment states and refund behavior',
+    'Dispute behavior',
+    'Whether held-fund implementation is legally or technically escrow',
+  ],
+  challengesTodo:
+    '[TODO] Add only repository-verified technical challenges, decisions and trade-offs. No challenge narrative is currently documented.',
+  resultsTodo:
+    '[TODO] Add verified demo status, measurable results and post-project lessons when evidence is available.',
+} as const

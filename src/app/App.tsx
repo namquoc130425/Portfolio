@@ -7,6 +7,7 @@ import { profile } from '../data/profile'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import { Hero } from '../sections/Hero/Hero'
 import { SystemBoot } from '../sections/Boot/SystemBoot'
+import { AiTasterCaseStudy } from '../sections/CaseStudy/AiTasterCaseStudy'
 import { WorkPreview } from '../sections/Work/WorkPreview'
 
 const PortfolioCanvas = lazy(() =>
@@ -75,6 +76,7 @@ function App() {
       <main id="main-content" className="portfolio-main" tabIndex={-1}>
         <Hero sectionRef={heroRef} />
         <WorkPreview sectionRef={workRef} />
+        <AiTasterCaseStudy />
       </main>
 
       {!bootComplete && (
