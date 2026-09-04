@@ -132,9 +132,11 @@ function App() {
         </nav>
       </header>
 
-      <Suspense fallback={null}>
-        <PortfolioCanvas activeSkill={activeSkill} artifactState={artifactState} onReady={setCanvasReadyOnce} />
-      </Suspense>
+      {!usesSemanticCanvasFallback && (
+        <Suspense fallback={null}>
+          <PortfolioCanvas activeSkill={activeSkill} artifactState={artifactState} onReady={setCanvasReadyOnce} />
+        </Suspense>
+      )}
 
       <main id="main-content" className="portfolio-main" tabIndex={-1}>
         <Hero sectionRef={heroRef} />
