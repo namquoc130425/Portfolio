@@ -26,7 +26,16 @@ export function SkillsSystem({ activeSkill, onActiveSkillChange, sectionRef }: S
             <h3 id={`skills-${category.id}`}>{category.label}</h3>
             <ul>
               {category.skills.map((skill) => {
-                const active = activeSkill === skill.stateKey
+                const stateKey = skill.stateKey
+                const active = activeSkill === stateKey
+
+                if (!stateKey) {
+                  return (
+                    <li key={skill.id}>
+                      <span className="skills-system__skill skills-system__skill--static">{skill.label}</span>
+                    </li>
+                  )
+                }
 
                 return (
                   <li key={skill.id}>
@@ -35,9 +44,9 @@ export function SkillsSystem({ activeSkill, onActiveSkillChange, sectionRef }: S
                       type="button"
                       aria-pressed={active}
                       onBlur={() => onActiveSkillChange(null)}
-                      onClick={() => onActiveSkillChange(skill.stateKey)}
-                      onFocus={() => onActiveSkillChange(skill.stateKey)}
-                      onPointerEnter={() => onActiveSkillChange(skill.stateKey)}
+                      onClick={() => onActiveSkillChange(stateKey)}
+                      onFocus={() => onActiveSkillChange(stateKey)}
+                      onPointerEnter={() => onActiveSkillChange(stateKey)}
                       onPointerLeave={(event) => {
                         if (event.currentTarget !== document.activeElement) onActiveSkillChange(null)
                       }}

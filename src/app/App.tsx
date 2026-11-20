@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createAboutArtifactTrigger } from '../animation/scroll/createAboutArtifactTrigger'
 import { createContactArtifactTrigger } from '../animation/scroll/createContactArtifactTrigger'
 import { createHeroWorkTimeline } from '../animation/scroll/createHeroWorkTimeline'
@@ -14,6 +14,8 @@ import { SystemBoot } from '../sections/Boot/SystemBoot'
 import { AboutManifesto } from '../sections/About/AboutManifesto'
 import { AiTasterCaseStudy } from '../sections/CaseStudy/AiTasterCaseStudy'
 import { ContactFinalCta } from '../sections/Contact/ContactFinalCta'
+import { CarShowRoomOverview } from '../sections/CarShowRoom/CarShowRoomOverview'
+import { Experience } from '../sections/Experience/Experience'
 import { SkillsSystem } from '../sections/Skills/SkillsSystem'
 import { WorkPreview } from '../sections/Work/WorkPreview'
 
@@ -23,6 +25,7 @@ const PortfolioCanvas = lazy(() =>
 
 const navigationItems = [
   { href: '#work', label: 'Work' },
+  { href: '#experience', label: 'Experience' },
   { href: '#about', label: 'About' },
   { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },
@@ -31,6 +34,8 @@ const navigationItems = [
 const navigationSections = [
   { href: '#work', id: 'work' },
   { href: '#work', id: 'ai-taster-case-study' },
+  { href: '#work', id: 'carshowroom' },
+  { href: '#experience', id: 'experience' },
   { href: '#about', id: 'about' },
   { href: '#skills', id: 'skills' },
   { href: '#contact', id: 'contact' },
@@ -57,6 +62,27 @@ function App() {
   }, [reducedMotion])
 
   useLenisScroll(reducedMotion)
+
+  useEffect(() => {
+    if (!bootComplete) return undefined
+
+    let canceled = false
+    let frame = 0
+
+    // React content and the pinned Hero change the layout after native hash restoration.
+    void document.fonts.ready.then(() => {
+      if (canceled) return
+      frame = requestAnimationFrame(() => {
+        const hash = window.location.hash.slice(1)
+        if (hash) document.getElementById(hash)?.scrollIntoView({ block: 'start', behavior: 'instant' })
+      })
+    })
+
+    return () => {
+      canceled = true
+      cancelAnimationFrame(frame)
+    }
+  }, [bootComplete])
 
   useLayoutEffect(() => {
     if (!heroRef.current || !workRef.current) return undefined
@@ -142,6 +168,8 @@ function App() {
         <Hero sectionRef={heroRef} />
         <WorkPreview sectionRef={workRef} />
         <AiTasterCaseStudy />
+        <CarShowRoomOverview />
+        <Experience />
         <AboutManifesto sectionRef={aboutRef} />
         <SkillsSystem
           activeSkill={activeSkill}

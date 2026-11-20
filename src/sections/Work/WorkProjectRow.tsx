@@ -12,10 +12,9 @@ type WorkProjectRowProps = {
 export function WorkProjectRow({ active, project, onActivate, onDeactivate }: WorkProjectRowProps) {
   return (
     <article className={`work-project ${active ? 'is-active' : ''}`}>
-      <button
+      <a
         className="work-project__button"
-        type="button"
-        aria-expanded={active}
+        href={project.href}
         onBlur={onDeactivate}
         onFocus={onActivate}
         onMouseEnter={onActivate}
@@ -31,10 +30,10 @@ export function WorkProjectRow({ active, project, onActivate, onDeactivate }: Wo
         <span className="work-project__arrow" aria-hidden="true">
           ↗
         </span>
-      </button>
+      </a>
 
       <div className="work-project__details" aria-hidden={!active}>
-        <p>Selected system / {project.year}</p>
+        <p>Selected system / {project.metadata}</p>
         <ul aria-label={`${project.title} technologies`}>
           {project.technologies.map((technology) => (
             <li key={technology}>{technology}</li>

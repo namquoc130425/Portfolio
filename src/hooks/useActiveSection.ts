@@ -6,7 +6,13 @@ export type NavigationSection = {
 }
 
 function navigationHrefFromHash(hash: string, sections: readonly NavigationSection[]) {
-  return sections.find((section) => `#${section.id}` === hash)?.href ?? null
+  const exactMatch = sections.find((section) => `#${section.id}` === hash)
+  if (exactMatch) return exactMatch.href
+
+  const target = typeof document === 'undefined' ? null : document.getElementById(hash.slice(1))
+  if (!target) return null
+
+  return sections.find((section) => document.getElementById(section.id)?.contains(target))?.href ?? null
 }
 
 export function useActiveSection(sections: readonly NavigationSection[]) {

@@ -2,14 +2,14 @@ export const profile = {
   name: 'Nguyễn Vương Quốc Nam',
   location: 'Ho Chi Minh City / Vietnam',
   availability: 'Available for internship',
-  role: 'Full-stack Software Developer',
+  role: 'Java Backend Developer Intern',
   tagline:
-    'Backend-focused developer building Java/Spring systems, scalable APIs and interactive digital experiences.',
+    'Backend-focused developer building Java/Spring systems, reliable payment workflows and interactive digital experiences.',
   contact: {
     availability: 'Available for Backend Developer Internship',
     location: 'Ho Chi Minh City, Vietnam',
     supportingCopy:
-      'Backend-focused Full-stack Developer currently looking for internship opportunities.',
+      'Java backend developer currently looking for internship opportunities.',
     email: {
       label: 'Email',
       value: 'namquoc725@gmail.com',
