@@ -942,6 +942,8 @@ a:focus-visible {
 .editorial-summary__heading {
   display: grid;
   grid-column: 1 / span 4;
+  min-width: 0;
+  container-type: inline-size;
   align-content: start;
   gap: var(--space-lg);
 }
@@ -967,11 +969,16 @@ a:focus-visible {
 .editorial-summary__heading h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 4.8vw, 5.5rem);
+  font-size: min(clamp(3rem, 4.8vw, 5.5rem), 21cqi);
   font-weight: 500;
   letter-spacing: -0.06em;
   line-height: 0.9;
   text-transform: uppercase;
+}
+
+#carshowroom-title {
+  /* The content grid stops growing on wide screens; size this word to its column. */
+  font-size: clamp(1.5rem, 13cqi, 5.5rem);
 }
 
 .editorial-summary__metadata {
